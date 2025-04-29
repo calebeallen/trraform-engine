@@ -1,0 +1,3 @@
+*/2 * * * * cd /app && python update_chunks.py
+5,17,29,41,53 * * * * cd /app && python update_base_chunks.py 1
+11,35 * * * * cd /app && python update_base_chunks.py 0

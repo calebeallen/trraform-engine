@@ -1,0 +1,8 @@
+.venv
+__pycache__
+.vscode
+build_chunks
+point_clouds
+.env
+.gitignore
+update.py

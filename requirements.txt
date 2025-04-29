@@ -1,1 +1,6 @@
+boto3==1.38.2
 numpy==2.2.5
+python-dotenv==1.1.0
+redis==4.3.4
+scikit-learn==1.6.1
+scipy==1.15.2
