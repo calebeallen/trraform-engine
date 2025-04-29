@@ -7,6 +7,7 @@ from utils.plot_id import PlotId
 from utils.chunk_id import ChunkId
 from utils.constants import *
 from update_chunks_worker import update_chunk
+from utils import cloudflare_util
 
 if __name__ == "__main__":
 
@@ -43,5 +44,9 @@ if __name__ == "__main__":
     with ProcessPoolExecutor() as executor:
         executor.map(update_chunk, update_chunks.values())
 
+    # purge cache
+    urls = [f"{CHUNK_BUCKET_URL}/{cid}.dat" for cid in update_chunks]
+    if urls:
+        cloudflare_util.purge_cache_cdn(urls)
 
     

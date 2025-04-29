@@ -1,11 +1,14 @@
 
+CHUNK_BUCKET_URL = "https://chunk.trraform.com"
+ORIGIN = "https://trraform.com"
+
 REDIS_HOST = "redis-16216.c15.us-east-1-4.ec2.redns.redis-cloud.com"
 REDIS_PORT = 16216
 REDIS_USERNAME = "default"
 REDIS_DB = 0
 
 PLOTS_BUCKET_NAME = "plots"
-CHUNKS_BUCKET_NAME = "chunk-test"
+CHUNKS_BUCKET_NAME = "chunk"
 
 MAIN_BUILD_SIZE = 115
 MAX_DEPTH = 2

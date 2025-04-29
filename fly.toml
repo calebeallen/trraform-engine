@@ -1,14 +1,14 @@
-# fly.toml app configuration file generated for trraform-api-4a1d5fa5-8aa8-48ae-83b5-4771e43babf4 on 2025-03-27T23:18:30-04:00
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
-app = 'trraform-engine'
-primary_region = 'iad'
+app = "trraform-engine"
+primary_region = "iad"
 
-[deploy]
-  strategy = 'rolling'
-  max_unavailable = 1.0
+[processes]
+app = "supercronic /app/crontab"   # single process group called “app”
+
+# No HTTP, so delete the whole [http_service] block
+# or keep it with auto_start/stop disabled if you still want 0 → N scaling.
 
 [[vm]]
-  size = 'shared-cpu-4x'
-  memory = 1024
+size = "shared-cpu-4x"
+
+
+

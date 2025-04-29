@@ -7,6 +7,7 @@ from utils.chunk_id import ChunkId
 from dotenv import load_dotenv
 import sys
 from update_base_chunks_worker import update_base_chunk 
+from utils import cloudflare_util
 
 
 if __name__ == "__main__":
@@ -29,3 +30,9 @@ if __name__ == "__main__":
 
     with ProcessPoolExecutor() as executor:
         executor.map(update_base_chunk, update_chunks)
+
+    # purge cache
+    urls = [f"{CHUNK_BUCKET_URL}/{str(cid)}.dat" for cid in update_chunks]
+    if urls:
+        cloudflare_util.purge_cache_cdn(urls)
+
