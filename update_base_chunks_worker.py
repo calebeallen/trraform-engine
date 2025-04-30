@@ -22,6 +22,10 @@ redis_cli = redis.Redis(
     db=REDIS_DB,
 )
 
+LINEAR_THRESH = int(os.getenv("LINEAR_THRESH"))
+SQRT_THRESH = int(os.getenv("SQRT_THRESH"))
+LAYER_1_SAMPLE_PER = int(os.getenv("LAYER_1_SAMPLE_PER"))
+
 def update_base_chunk(chunk_id):
 
     try:
@@ -46,10 +50,14 @@ def update_base_chunk(chunk_id):
             if N < 2:
                 continue
 
-            if N <= 64:
-                n_clusters = math.ceil(math.sqrt(N))
+            if N >= 0 and N < LINEAR_THRESH:
+                n_clusters = math.ceil(N / 2)
+            elif N >= LINEAR_THRESH and N < SQRT_THRESH:
+                offset = math.ceil(LINEAR_THRESH / 2) - math.ceil(math.sqrt(LINEAR_THRESH))
+                n_clusters = math.ceil(math.sqrt(N)) + offset
             else:
-                n_clusters = math.ceil(math.log(N))
+                offset = math.ceil(LINEAR_THRESH / 2) - math.ceil(math.sqrt(LINEAR_THRESH)) + math.ceil(math.sqrt(SQRT_THRESH)) - math.ceil(math.log(SQRT_THRESH))
+                n_clusters = math.ceil(math.log(N)) + offset
 
             xyz, rgb = points[:, :3], points[:, 3:]
 
@@ -90,7 +98,7 @@ def update_base_chunk(chunk_id):
             if chunk_id.par_id > 0:
 
                 # get random sample of points SAMPLE_PERCENTAGE and append to samples
-                sample_size = max(1, int(points.shape[0] * SAMPLE_PERCENTAGE[layer - 1] / 100))
+                sample_size = max(1, int(points.shape[0] * LAYER_1_SAMPLE_PER / 100))
                 if sample_size > points.shape[0]:
                     sample_size = points.shape[0]
 
@@ -113,5 +121,6 @@ def update_base_chunk(chunk_id):
         cloudflare_util.put_object(CHUNKS_BUCKET_NAME, f"{str(chunk_id)}.dat", encoded_chunk)
 
     except Exception as e:
+        print(e)
         traceback.print_exc()
     

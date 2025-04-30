@@ -10,5 +10,9 @@ app = "supercronic /app/crontab"   # single process group called “app”
 [[vm]]
 size = "shared-cpu-4x"
 
-
+[env]
+    LAYER_2_SAMPLE_PER = "10"
+    LAYER_1_SAMPLE_PER = "25"
+    LINEAR_THRESH = "8"
+    SQRT_THRESH = "1000" # switch to ln after this
 

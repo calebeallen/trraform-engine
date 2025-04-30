@@ -19,6 +19,8 @@ if os.getenv("ENV") != "prod":
 
 plot_id_to_pos = {}
 
+LAYER_2_SAMPLE_PER = int(os.getenv("LAYER_2_SAMPLE_PER"))
+
 # get id to pos map
 with open("./static/L2.dat", "rb") as file:
 
@@ -79,7 +81,7 @@ def update_chunk(data):
                 cols = np.asarray(expanded)
 
                 # Boolean mask: keep voxels that are “solid” *and* randomly chosen
-                mask = (cols > PLOT_COUNT) & (np.random.rand(cols.size) < SAMPLE_PERCENTAGE[1] / 100)
+                mask = (cols > PLOT_COUNT) & (np.random.rand(cols.size) < LAYER_2_SAMPLE_PER / 100)
                 idxs = np.nonzero(mask)[0]           # indices of selected voxels
 
                 if idxs.size:
