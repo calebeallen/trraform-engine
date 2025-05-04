@@ -8,7 +8,7 @@ app = "supercronic /app/crontab"   # single process group called “app”
 # or keep it with auto_start/stop disabled if you still want 0 → N scaling.
 
 [[vm]]
-size = "shared-cpu-4x"
+size = "shared-cpu-1x"
 
 [env]
     LAYER_2_SAMPLE_PER = "10"
