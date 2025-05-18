@@ -2,9 +2,6 @@
 FROM python:3.11-slim
 WORKDIR /app
 
-# ─────────────────── runtime directories / deps ───────────────
-RUN mkdir -p /app/point_clouds
-
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 

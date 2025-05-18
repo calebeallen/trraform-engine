@@ -2,10 +2,11 @@ app = "trraform-engine"
 primary_region = "iad"
 
 [processes]
-app = "supercronic /app/crontab"   # single process group called “app”
+    app = "supercronic /app/crontab"   # single process group called "app"
 
-# No HTTP, so delete the whole [http_service] block
-# or keep it with auto_start/stop disabled if you still want 0 → N scaling.
+[mounts]
+    source = "point_clouds"
+    destination = "/app/crontab/point_clouds"
 
 [[vm]]
 size = "shared-cpu-1x"
@@ -15,4 +16,3 @@ size = "shared-cpu-1x"
     LAYER_1_SAMPLE_PER = "25"
     LINEAR_THRESH = "8"
     SQRT_THRESH = "1000" # switch to ln after this
-
