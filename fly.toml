@@ -6,7 +6,7 @@ primary_region = "iad"
 
 [mounts]
     source = "point_clouds"
-    destination = "/app/crontab/point_clouds"
+    destination = "/app/point_clouds"
 
 [[vm]]
 size = "shared-cpu-1x"
